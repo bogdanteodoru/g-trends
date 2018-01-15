@@ -122,6 +122,12 @@ class GTrends
 
                 if ($widget['title'] == 'Interest over time') {
 
+		    // for whatever reason, it should return an empty object but instead it returns 
+		    // an empty array. So we check if its an empty array and transform into an object.	
+		    if (empty($widget['request']['comparisonItem'][0]['geo'])) {
+                        $widget['request']['comparisonItem'][0]['geo'] = new \stdClass;
+                    }			
+
                     $interestOverTimePayload['hl'] = $this->options['hl'];
                     $interestOverTimePayload['tz'] = $this->options['tz'];
                     $interestOverTimePayload['req'] = Json\Json::encode($widget['request']);
